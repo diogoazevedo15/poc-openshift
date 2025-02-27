@@ -7,7 +7,7 @@ app = Flask(__name__)
 def home():
     try:
         # URL uses backend’s service name in the cluster: "backend-service" (we'll define it later)
-        response = requests.get('http://backend-service:5000/data', timeout=2)
+        response = requests.get('http://backend-service:8000/data', timeout=2)
         data = response.json()
         message = data.get('message', 'No message found')
     except Exception as e:
