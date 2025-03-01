@@ -7,7 +7,7 @@ app = Flask(__name__)
 def home():
     try:
         # URL uses backend’s service name in the cluster: "backend-service" (we'll define it later)
-        response = requests.get('http://poc-openshift-backend:8000/data', timeout=2)
+        response = requests.get('http://poc-openshift-backend:8010/data', timeout=2)
         data = response.json()
         message = data.get('message', 'No message found')
     except Exception as e:
@@ -25,4 +25,4 @@ def home():
     return render_template_string(html)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8001)
+    app.run(host='0.0.0.0', port=8011)
