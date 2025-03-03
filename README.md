@@ -1,18 +1,12 @@
 # OpenShift POC
 
-This repository contains a simple proof of concept (POC) project demonstrating how to work with an OpenShift cluster (deployed locally using [crc](https://crc.dev/)). It features two components: a front-end application and a back-end application, each running in its own container, deployed to the `poc-openshift` namespace within the cluster.
+This project runs on an OpenShift cluster (deployed locally with CodeReady Containers **crc**). Below is a simple diagram of how the components are connected:
 
-## Table of Contents
+![Architecture Diagram](docs/images/architecture.png)
 
-1. [Project Structure](https://www.notion.so/Openshift-1a83dd4d61fb80089f2ad6cc8c931b8f?pvs=21)
-2. [Architecture Overview](https://www.notion.so/Openshift-1a83dd4d61fb80089f2ad6cc8c931b8f?pvs=21)
-3. [OpenShift Concepts](https://www.notion.so/Openshift-1a83dd4d61fb80089f2ad6cc8c931b8f?pvs=21)
-4. [How to Use](https://www.notion.so/Openshift-1a83dd4d61fb80089f2ad6cc8c931b8f?pvs=21)
-5. [Cheat Sheets](https://www.notion.so/Openshift-1a83dd4d61fb80089f2ad6cc8c931b8f?pvs=21)
-    - [CRC Commands](https://www.notion.so/Openshift-1a83dd4d61fb80089f2ad6cc8c931b8f?pvs=21)
-    - [OC Commands](https://www.notion.so/Openshift-1a83dd4d61fb80089f2ad6cc8c931b8f?pvs=21)
-
----
+1. **Pods**: Each pod runs your containerized front-end or back-end application.
+2. **Services**: They provide a stable endpoint (cluster-internal IP) for each set of pods.
+3. **Routes**: They expose the Services externally, allowing the user to access the applications from outside the cluster.
 
 ## Project Structure
 
@@ -20,19 +14,19 @@ This repository contains a simple proof of concept (POC) project demonstrating h
 project-root/
 │
 ├── openshift/
-│   ├── backend-deployment.yaml
+│   ├── backend-deployment.yaml # Contains the YAML files for deploying the applications (front-end and back-end) to OpenShift.
 │   ├── backend-route.yaml
 │   ├── backend-service.yaml
 │   ├── frontend-deployment.yaml
 │   ├── frontend-route.yaml
 │   └── frontend-service.yaml
 │
-├── backend/
+├── backend/ # Basic Python back-end.
 │   ├── app.py
 │   ├── Dockerfile
 │   └── requirements.txt
 │
-├── frontend/
+├── frontend/ # Basic Python front-end.
 │   ├── app.py
 │   ├── Dockerfile
 │   └── requirements.txt
@@ -40,30 +34,6 @@ project-root/
 └── README.md
 
 ```
-
-- **openshift/**: Contains the YAML files for deploying the applications (front-end and back-end) to OpenShift.
-- **backend/**: Basic Python back-end, `app.py`, `Dockerfile`, and `requirements.txt`.
-- **frontend/**: Basic Python front-end, `app.py`, `Dockerfile`, and `requirements.txt`.
-
----
-
-## Architecture Overview
-
-This project runs on an OpenShift cluster (deployed locally with CodeReady Containers **crc**). Below is a simple diagram of how the components are connected:
-
-(i have an image of the architecture. Make it so i can add the path to the image here.)
-
-1. **Pods**: Each pod runs your containerized front-end or back-end application.
-2. **Services**: They provide a stable endpoint (cluster-internal IP) for each set of pods.
-3. **Routes**: They expose the Services externally, allowing the user to access the applications from outside the cluster.
-
----
-
-## OpenShift Concepts
-
-- **Pod**: The smallest deployable unit in OpenShift/Kubernetes. Think of it as a single instance of a running process in your cluster.
-- **Service**: An abstraction that defines a logical set of pods and a policy by which they can be accessed. This ensures that if pods change IP addresses or are recreated, the Service endpoint remains constant.
-- **Route**: A way to expose a Service outside the OpenShift cluster. A route provides an externally accessible hostname.
 
 ---
 
@@ -77,7 +47,6 @@ This project runs on an OpenShift cluster (deployed locally with CodeReady Conta
 3. **Create the `poc-openshift` namespace** (if it doesn’t already exist):
     
     ```bash
-    CopyEdit
     oc new-project poc-openshift
     
     ```
@@ -141,9 +110,3 @@ oc get pod/svc/route "name"
 oc delete pod/svc/route "name"
 
 ```
-
----
-
-## License
-
-This project is licensed under MIT License – feel free to customize the license section to whatever suits your project best.
