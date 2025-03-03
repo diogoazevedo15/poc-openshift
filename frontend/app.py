@@ -6,8 +6,7 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     try:
-        # URL uses backend’s service name in the cluster: "backend-service" (we'll define it later)
-        response = requests.get('http://poc-openshift-backend:8010/data', timeout=2)
+        response = requests.get('http://backend-service:80/data', timeout=2)
         data = response.json()
         message = data.get('message', 'No message found')
     except Exception as e:
